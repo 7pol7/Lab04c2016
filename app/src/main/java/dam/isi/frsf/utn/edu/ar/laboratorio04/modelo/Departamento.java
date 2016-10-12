@@ -128,6 +128,13 @@ public class Departamento implements Serializable {
             this.telefonoPropietario = telefonoPropietario;
         }
 
+    public Boolean getNoFumador() {
+        return noFumador;
+    }
+
+    public void setNoFumador(Boolean noFumador) {
+        this.noFumador = noFumador;
+    }
 
     @Override
     public String toString() {

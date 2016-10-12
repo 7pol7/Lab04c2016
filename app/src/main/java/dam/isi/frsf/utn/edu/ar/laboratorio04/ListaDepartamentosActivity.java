@@ -28,7 +28,7 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alojamientos);
         lista= new ArrayList<>();
-        listaAlojamientos= (ListView ) findViewById(R.id.listaAlojamientos);
+        listaAlojamientos= (ListView) findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) findViewById(R.id.estadoBusqueda);
 
     }
@@ -39,7 +39,7 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         Intent intent = getIntent();
         Boolean esBusqueda = intent.getExtras().getBoolean("esBusqueda");
         if(esBusqueda){
-            FormBusqueda fb = (FormBusqueda ) intent.getSerializableExtra("frmBusqueda");
+            FormBusqueda fb = (FormBusqueda) intent.getSerializableExtra("frmBusqueda");
             new BuscarDepartamentosTask(ListaDepartamentosActivity.this).execute(fb);
             tvEstadoBusqueda.setText("Buscando....");
             tvEstadoBusqueda.setVisibility(View.VISIBLE);
@@ -54,6 +54,10 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
     @Override
     public void busquedaFinalizada(List<Departamento> listaDepartamento) {
         //TODO implementar
+        tvEstadoBusqueda.setVisibility(View.GONE);
+        lista=listaDepartamento;
+        departamentosAdapter = new DepartamentoAdapter(ListaDepartamentosActivity.this,lista);
+        listaAlojamientos.setAdapter(departamentosAdapter);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.SwitchCompat;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity
 
         frmBusq= new FormBusqueda();
         txtHuespedes = (EditText) findViewById(R.id.cantHuespedes);
+
         skPrecioMin = (SeekBar) findViewById(R.id.precioMin);
         skPrecioMin.setOnSeekBarChangeListener(listenerSB);
 
@@ -67,11 +69,12 @@ public class MainActivity extends AppCompatActivity
         skPrecioMax.setOnSeekBarChangeListener(listenerSB);
 
         swFumadores = (Switch) findViewById(R.id.aptoFumadores);
-        adapterCiudad = new ArrayAdapter<Ciudad>(MainActivity.this,android.R.layout.simple_spinner_item, Arrays.asList(Ciudad.CIUDADES));
 
+        adapterCiudad = new ArrayAdapter<Ciudad>(MainActivity.this,android.R.layout.simple_spinner_item, Arrays.asList(Ciudad.CIUDADES));
         cmbCiudad = (Spinner) findViewById(R.id.comboCiudad);
         cmbCiudad.setAdapter(adapterCiudad);
         cmbCiudad.setOnItemSelectedListener(comboListener);
+
         tvPrecioMinimo = (TextView ) findViewById(R.id.txtPrecioMin);
         tvPrecioMaximo= (TextView ) findViewById(R.id.txtPrecioMax);
 
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity
         public void onClick(View view) {
             Intent i = new Intent(MainActivity.this,ListaDepartamentosActivity.class);
             frmBusq.setPermiteFumar(swFumadores.isSelected());
+            frmBusq.setHuespedes(Integer.parseInt(txtHuespedes.getText().toString()));
             i.putExtra("esBusqueda",true);
             i.putExtra("frmBusqueda",frmBusq);
             startActivity(i);

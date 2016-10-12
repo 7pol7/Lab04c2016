@@ -28,13 +28,12 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
 
     @Override
     protected void onPostExecute(List<Departamento> departamentos) {
+        listener.busquedaFinalizada(departamentos);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        listener.busquedaActualizada("departamento "+values[0]);
-
-
+        listener.busquedaActualizada(" departamentos encontrados: "+values[0]);
     }
 
     @Override
@@ -42,9 +41,31 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
         List<Departamento> todos = Departamento.getAlojamientosDisponibles();
         List<Departamento> resultado = new ArrayList<Departamento>();
         int contador = 0;
-        Ciudad ciudadBuscada = busqueda[0].getCiudad();
+        //Ciudad ciudadBuscada = busqueda[0].getCiudad();
         // TODO implementar: buscar todos los departamentos del sistema e ir chequeando las condiciones 1 a 1.
         // si cumplen las condiciones agregarlo a los resultados.
+        /**
+         * Se realiza la comprobación de los departamentos segun la busqueda requerida
+         */
+        for (FormBusqueda search: busqueda){
+            for (Departamento flat: todos){
+                if (search.getCiudad().equals(flat.getCiudad())
+                        && search.getHuespedes()<=flat.getCapacidadMaxima()
+                        && search.getPrecioMaximo()>=flat.getPrecio()
+                        && search.getPrecioMinimo()<=flat.getPrecio()
+                        && search.getPermiteFumar().booleanValue()!=flat.getNoFumador().booleanValue()){
+                    resultado.add(flat);
+                    contador++;
+                    publishProgress(contador);
+                    try {
+                        Thread.sleep(512);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
         return resultado;
     }
 }
