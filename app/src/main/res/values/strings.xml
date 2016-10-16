@@ -6,4 +6,6 @@
     <string name="navigation_drawer_close">Ocultar Opciones</string>
 
     <string name="action_settings">Configuracion</string>
+
+    <string name="btnReservar">Reservar</string>
 </resources>
