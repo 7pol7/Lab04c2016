@@ -10,7 +10,6 @@ import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Reserva;
 public class DataHandler {
     private static  DataHandler handler;
     private List<Reserva> list;
-    private boolean isResume;
 
     private DataHandler(){
     }
@@ -30,11 +29,4 @@ public class DataHandler {
         this.list = list;
     }
 
-    public boolean getIsResume(){
-        return isResume;
-    }
-
-    public void setIsResume(boolean isResume){
-        this.isResume = isResume;
-    }
 }

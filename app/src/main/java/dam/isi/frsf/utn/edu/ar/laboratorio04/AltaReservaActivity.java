@@ -25,6 +25,7 @@ public class AltaReservaActivity extends AppCompatActivity {
     private List<Reserva> listaReserva;
     private ListView listViewReserva;
     private DataHandler handler;
+    private Boolean repetido = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,12 @@ public class AltaReservaActivity extends AppCompatActivity {
         listaReserva = new ArrayList<>();
         listViewReserva = (ListView) findViewById(R.id.lvReserva);
         handler = DataHandler.getInstance();
-        if (handler.getList() != null) listaReserva = handler.getList();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (handler.getList() != null) listaReserva = handler.getList();
         Intent intent = getIntent();
         Boolean esReserva = intent.getExtras().getBoolean("esReserva");
         if (esReserva) {
@@ -50,7 +51,10 @@ public class AltaReservaActivity extends AppCompatActivity {
             Intent i = getIntent();
             Departamento dpto = (Departamento)i.getSerializableExtra("hotel");
             Reserva reserva = new Reserva(listaReserva.size()+1,inicio,fin,dpto);
-            listaReserva.add(reserva);
+            for (Reserva list: listaReserva){
+                if (list.getAlojamiento().getId()==reserva.getAlojamiento().getId()) repetido = Boolean.TRUE;
+                }
+            if (!repetido) listaReserva.add(reserva);
 
         }
         else{
@@ -67,4 +71,15 @@ public class AltaReservaActivity extends AppCompatActivity {
         handler.setList(listaReserva);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        handler.setList(listaReserva);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        listaReserva = handler.getList();
+    }
 }
