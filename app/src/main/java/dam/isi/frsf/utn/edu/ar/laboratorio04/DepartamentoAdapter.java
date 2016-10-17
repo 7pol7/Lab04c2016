@@ -51,6 +51,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
                 //Toast.makeText(getContext(),getItem(position).getPrecio().toString(),Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getContext(),AltaReservaActivity.class);
                 i.putExtra("hotel",getItem(position));
+                i.putExtra("esReserva",true);
                 contexto.startActivity(i);
             }
         });

@@ -24,6 +24,7 @@ public class Reserva implements Serializable {
         this.fechaFin = fechaFin;
         this.departamento = departamento;
         this.precio = departamento.getPrecio();
+        this.setConfirmada(false);
     }
 
     public Integer getId() {

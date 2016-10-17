@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private EditText txtHuespedes;
     private Switch swFumadores;
     private FormBusqueda frmBusq;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +179,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_perfil:
                 break;
             case R.id.nav_reservas:
+                Intent i2 = new Intent(MainActivity.this, AltaReservaActivity.class);
+                i2.putExtra("esReserva",false);
+                startActivity(i2);
                 break;
             case R.id.nav_destinos:
                 break;
