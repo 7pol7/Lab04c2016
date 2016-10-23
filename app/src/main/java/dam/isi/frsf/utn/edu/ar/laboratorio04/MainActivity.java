@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_reservas:
                 Intent i2 = new Intent(MainActivity.this, AltaReservaActivity.class);
+                i2.putExtra("source","first");
                 i2.putExtra("esReserva",false);
                 startActivity(i2);
                 break;

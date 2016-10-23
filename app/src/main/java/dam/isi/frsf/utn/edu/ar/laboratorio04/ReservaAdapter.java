@@ -49,8 +49,13 @@ public class ReservaAdapter extends ArrayAdapter<Reserva> {
         holder.tvPrecio.setText("$ " + df.format(this.getItem(position).getPrecio()));
         holder.tvFechaInicio.setText(dateFormat.format(this.getItem(position).getFechaInicio()));
         holder.tvFechaFin.setText(dateFormat.format(this.getItem(position).getFechaFin()));
-        if (holder.cbReserva.isChecked()){
+        if (this.getItem(position).getConfirmada()){
             holder.cbReserva.setChecked(true);
+            holder.cbPendiente.setChecked(false);
+        }
+        else{
+            holder.cbReserva.setChecked(false);
+            holder.cbPendiente.setChecked(true);
         }
 
         return fila;
@@ -62,6 +67,7 @@ public class ReservaAdapter extends ArrayAdapter<Reserva> {
         TextView tvFechaInicio = null;
         TextView tvFechaFin = null;
         CheckBox cbReserva = null;
+        CheckBox cbPendiente = null;
 
         ViewHolder(View base){
             this.tvDepto = (TextView)base.findViewById(R.id.tvDepto);
@@ -69,6 +75,7 @@ public class ReservaAdapter extends ArrayAdapter<Reserva> {
             this.tvFechaInicio = (TextView)base.findViewById(R.id.tvFechaInicio);
             this.tvFechaFin = (TextView)base.findViewById(R.id.tvFechaFin);
             this.cbReserva = (CheckBox)base.findViewById(R.id.cbReserva);
+            this.cbPendiente = (CheckBox)base.findViewById(R.id.cbPendiente);
         }
     }
 }
