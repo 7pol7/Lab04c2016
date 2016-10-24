@@ -1,6 +1,7 @@
 package dam.isi.frsf.utn.edu.ar.laboratorio04;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,30 +68,25 @@ public class AltaReservaActivity extends AppCompatActivity {
                         handler.setList(listaReserva);
                         establecerAlarmaReserva(reserva);
                     }
-
                 }
                 else{
                     listaReserva = handler.getList();
                 }
                 ReservaAdapter rAdapter = new ReservaAdapter(AltaReservaActivity.this,this.listaReserva);
-                this.listViewReserva.setAdapter(rAdapter);
+                try {
+                    this.listViewReserva.setAdapter(rAdapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("Exception--->",e.getMessage());
+                    this.listViewReserva.setAdapter(null);
+                    Toast.makeText(getApplicationContext(),"Lista vacía",Toast.LENGTH_LONG).show();
+                }
                 break;
 
             case "second":
-                Reserva reserva = (Reserva) intent.getExtras().get("resReserva");
-                /*for (Reserva list : listaReserva){
-                    if (list.getAlojamiento().getId()==reserva.getAlojamiento().getId()){
-                        list=reserva;
-                    }
-                }*/
-                for (int i=0; i<listaReserva.size(); i++){
-                    if (reserva.getAlojamiento().getId().equals(listaReserva.get(i).getAlojamiento().getId())){
-                        listaReserva.set(i,reserva);
-                    }
-                }
+                listaReserva = handler.getList();
                 rAdapter = new ReservaAdapter(AltaReservaActivity.this,this.listaReserva);
                 this.listViewReserva.setAdapter(rAdapter);
-                Log.d("ReservaIsCheck---->",reserva.getConfirmada().toString());
                 break;
         }
 
