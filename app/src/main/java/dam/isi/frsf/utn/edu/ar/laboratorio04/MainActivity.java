@@ -1,7 +1,10 @@
 package dam.isi.frsf.utn.edu.ar.laboratorio04;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.SwitchCompat;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private EditText txtHuespedes;
     private Switch swFumadores;
     private FormBusqueda frmBusq;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +55,31 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        final TextView userName = (TextView)header.findViewById(R.id.tvUserName);
+        TextView userMail = (TextView)header.findViewById(R.id.tvUserEmail);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        userName.setText(pref.getString("edit_user_name","Android Studio"));
+        userMail.setText(pref.getString("edit_user_email","android.studio@android.com"));
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                View header = navigationView.getHeaderView(0);
+                final TextView userName = (TextView)header.findViewById(R.id.tvUserName);
+                TextView userMail = (TextView)header.findViewById(R.id.tvUserEmail);
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(drawerView.getContext());
+                userName.setText(pref.getString("edit_user_name","Android Studio"));
+                userMail.setText(pref.getString("edit_user_email","android.studio@android.com"));
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         frmBusq= new FormBusqueda();
         txtHuespedes = (EditText) findViewById(R.id.cantHuespedes);
@@ -143,20 +164,22 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        /** Inflate the menu; this adds items to the action bar if it is present.*/
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        /** Handle action bar item clicks here. The action bar will
+        * automatically handle clicks on the Home/Up button, so long
+        * as you specify a parent activity in AndroidManifest.xml.*/
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        /**noinspection SimplifiableIfStatement*/
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -166,7 +189,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        /** Handle navigation view item clicks here.*/
         int id = item.getItemId();
         switch (id){
             case R.id.nav_deptos:
@@ -192,4 +215,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

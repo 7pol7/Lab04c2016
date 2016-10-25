@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Datos de Usuario">
+        <EditTextPreference
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Nombre de Usuario"
+            android:key="edit_user_name"
+            android:summary="Name"
+            android:icon="@drawable/icon_human"/>
+
+        <EditTextPreference
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Correo Electronico"
+            android:key="edit_user_email"
+            android:summary="aaa@bbb.ccc"
+            android:icon="@drawable/icon_mail"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Sonido">
+        <RingtonePreference
+            android:defaultValue="Default value"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Cambiar Ringtone"
+            android:key="edit_ringtone"
+            android:icon="@drawable/icon_megaphone">
+        </RingtonePreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -5,7 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -38,9 +40,12 @@ public class Notificacion extends BroadcastReceiver {
             resIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             resIntent.putExtra("source","second");
             pi = PendingIntent.getActivity(context, 0, resIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            Uri ringUri = Uri.parse(pref.getString("edit_ringtone","DEFAULT_RINGTONE_URI"));
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context.getApplicationContext())
                             .setSmallIcon(icon)
+                            .setSound(ringUri)
                             .setContentIntent(pi)
                             .setContentTitle("Reserva")
                             .setContentText("Se ha confirmado una reserva")

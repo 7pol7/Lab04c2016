@@ -119,4 +119,10 @@ public class AltaReservaActivity extends AppCompatActivity {
         manager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+15000,pIntent);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
 }
